@@ -25,6 +25,7 @@
 #include <linux/switch.h>
 #include <mach/htc_acoustic_8960.h>
 #include <mach/subsystem_restart.h>
+#include <linux/sched.h>
 
 #define ACOUSTIC_IOCTL_MAGIC 'p'
 #define ACOUSTIC_SET_Q6_EFFECT		_IOW(ACOUSTIC_IOCTL_MAGIC, 43, unsigned)

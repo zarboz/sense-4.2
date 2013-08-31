@@ -112,8 +112,9 @@ struct msm_pcm_routing_ops {
 	int (*get_q6_effect) (void);
 };
 
-void msm_pcm_routing_reg_phy_stream(int fedai_id, int dspst_id,
-	int stream_type);
+void msm_pcm_routing_reg_phy_stream(int fedai_id, bool perf_mode,
+				int dspst_id, int stream_type);
+
 void msm_pcm_routing_reg_psthr_stream(int fedai_id, int dspst_id,
 		int stream_type, int enable);
 
@@ -123,6 +124,7 @@ struct msm_pcm_routing_evt {
 };
 
 void msm_pcm_routing_reg_phy_stream_v2(int fedai_id,
+						bool perf_mode,
 				       int dspst_id, int stream_type,
 				       struct msm_pcm_routing_evt event_info);
 

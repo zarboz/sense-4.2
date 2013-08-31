@@ -1,0 +1,18 @@
+--- sound/soc/msm/qdsp6/q6adm.c	2013-06-24 02:50:47.000000000 -0600
++++ sound/soc/msm/qdsp6/q6adm.c	2013-08-01 23:38:03.000000000 -0600
+@@ -1176,7 +1196,6 @@
+ 	if (!ret) {
+ 		pr_err("%s: ADM cmd Route failed for port %d\n",
+ 					__func__, port_id[0]);
+-		HTC_Q6_BUG();
+ 		ret = -EINVAL;
+ 		goto fail_cmd;
+ 	}
+@@ -1417,7 +1436,6 @@
+ 		if (!ret) {
+ 			pr_err("%s: ADM cmd Route failed for port %d\n",
+ 						__func__, port_id);
+-			HTC_Q6_BUG();
+ 			ret = -EINVAL;
+ 			goto fail_cmd;
+ 		}

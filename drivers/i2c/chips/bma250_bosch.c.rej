@@ -1,0 +1,43 @@
+--- drivers/i2c/chips/bma250_bosch.c	2013-06-24 02:50:46.000000000 -0600
++++ drivers/i2c/chips/bma250_bosch.c	2013-08-01 23:38:02.000000000 -0600
+@@ -168,12 +217,40 @@
+ {
+ 	int comres = 0;
+ 	unsigned char data1;
++	struct bma250_data *bma250 = i2c_get_clientdata(client);
+ 
+ #ifdef CONFIG_CIR_ALWAYS_READY
+ 	if(cir_flag && Mode == BMA250_MODE_SUSPEND) {
+ 	    return 0;
+ 	} else {
+ #endif
++	I("%s++: mode = %d, bma250->ref_count = %d\n", __func__, Mode, bma250->ref_count);
++
++	mutex_lock(&bma250->mode_mutex);
++	if (BMA250_MODE_SUSPEND == Mode) {
++		if (bma250->ref_count > 0) {
++			bma250->ref_count--;
++			if (0 < bma250->ref_count) {
++				mutex_unlock(&bma250->mode_mutex);
++				I("%s--11: mode = %d, bma250->ref_count = %d\n", __func__, Mode, bma250->ref_count);
++				return 0;
++			}
++		}
++
++	} else {
++		bma250->ref_count++;
++		if (1 < bma250->ref_count) {
++			mutex_unlock(&bma250->mode_mutex);
++			I("%s--22: mode = %d, bma250->ref_count = %d\n", __func__, Mode, bma250->ref_count);
++			return 0;
++		}
++
++		
++		if (bma250->pdata->power_LPM) {
++			D("%s: Set to High Power mode!!\n", __func__);
++			bma250->pdata->power_LPM(0);
++		}
++	}
+ 
+ 	if (Mode < 3) {
+ 		comres = bma250_smbus_read_byte(client,
