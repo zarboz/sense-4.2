@@ -2936,14 +2936,14 @@ static int msm_pcm_routing_prepare(struct snd_pcm_substream *substream)
 				bedai->sample_rate,
 				channels,
 				DEFAULT_COPP_TOPOLOGY,
-				bit_width);
+				bit_width, 0);
 			} else if ((capture)
 				&& (channels > 0))
 				adm_multi_ch_copp_open(bedai->port_id,
 				path_type,
 				bedai->sample_rate,
 				channels,
-				topology);
+				topology, 0);
 			else
 				adm_open(bedai->port_id,
 				path_type,
